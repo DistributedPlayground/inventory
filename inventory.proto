@@ -2,11 +2,11 @@ syntax = "proto3";
 option go_package = "github.com/DistributedPlayground/inventory/api";
 
 message InventoryRequest {
-    string product_id = 1;
+    string id = 1;
 }
 
 message InventoryResponse {
-    int32 product_inventory = 1;
+    string count = 1;
 }
 
 service Inventory {
