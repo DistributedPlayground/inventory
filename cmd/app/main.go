@@ -12,6 +12,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 func main() {
@@ -23,7 +24,7 @@ func main() {
 	// lg := zerolog.New(os.Stdout)
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 
-	listener, err := net.Listen("tcp", config.Var.PORT)
+	listener, err := net.Listen("tcp", ":"+config.Var.PORT)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
@@ -31,11 +32,14 @@ func main() {
 	// Create a new instance of the inventory service
 	service := service.NewInventory(store.NewRedis(), api.UnimplementedInventoryServer{})
 
-	serverRegistrar := grpc.NewServer()
+	server := grpc.NewServer()
+
+	// Register reflection service on the server.
+	reflection.Register(server)
 
 	// Create a new gRPC server
-	api.RegisterInventoryServer(serverRegistrar, service)
-	serverRegistrar.Serve(listener)
+	api.RegisterInventoryServer(server, service)
+	server.Serve(listener)
 	if err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
