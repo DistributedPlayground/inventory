@@ -3,28 +3,25 @@ package service
 import (
 	"context"
 
+	"github.com/DistributedPlayground/inventory/api"
 	"github.com/DistributedPlayground/inventory/database"
-	"github.com/DistributedPlayground/inventory/pkg/model"
 )
-
-type Inventory interface {
-	Get(ctx context.Context, request *model.InventoryRequest) (response *model.InventoryResponse, err error)
-}
 
 type inventory struct {
 	redis database.RedisStore
+	api.UnimplementedInventoryServer
 }
 
-func NewInventory(redis database.RedisStore) Inventory {
-	return &inventory{redis}
+func NewInventory(redis database.RedisStore, u api.UnimplementedInventoryServer) api.InventoryServer {
+	return &inventory{redis, u}
 }
 
-func (i *inventory) Get(ctx context.Context, request *model.InventoryRequest) (response *model.InventoryResponse, err error) {
+func (i *inventory) Get(ctx context.Context, request *api.InventoryRequest) (response *api.InventoryResponse, err error) {
 	count, err := i.redis.Get(request.Id)
 	if err != nil {
-		return &model.InventoryResponse{}, err
+		return &api.InventoryResponse{}, err
 	} else {
-		return &model.InventoryResponse{
+		return &api.InventoryResponse{
 			Count: string(count),
 		}, nil
 	}
