@@ -65,9 +65,6 @@ For my first project, I'll create an ecommerce platform. This platform will allo
 - Should have 99.9% uptime
 - Should allow for concurrent development from a large distributed team
 
-#### Constraints
-- The core services must be completed by 1 engineer (me) in < 1 month. 
-
 #### Design
 - We will use Golang as the primary backend language.
 
