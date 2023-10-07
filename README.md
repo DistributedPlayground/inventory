@@ -1,5 +1,6 @@
 # Inventory
-The Inventory service is a [gRPC](https://grpc.io/) API, with [Redis](https://redis.io/) persistence, written in Go, and containerized with [Docker](https://www.docker.com/). Its purpose is to ensure accurate product inventory data to facilitate the product sale process. It is a fundamental part of our E-commerce platform within the [Distributed Playground](https://github.com/DistributedPlayground) project. See the [project description](https://github.com/DistributedPlayground/project-description) for more details.
+The Inventory service is a [gRPC](https://grpc.io/) API, with [Redis](https://redis.io/) persistence, written in Go, and containerized with [Docker](https://www.docker.com/). Its purpose is to ensure accurate product inventory data to facilitate the product sale process. 
+It is a fundamental part of our E-commerce platform within the [Distributed Playground](https://github.com/DistributedPlayground) project. See the [project description](https://github.com/DistributedPlayground/project-description) for more details.
 
 - [Service Architecture](#service-architecture)
 - [Endpoint Description](#endpoint-description)
