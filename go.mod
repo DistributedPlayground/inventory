@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/DistributedPlayground/go-lib v0.0.0-20230810053739-8a616d181e59
+	github.com/confluentinc/confluent-kafka-go/v2 v2.2.0
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/rs/zerolog v1.30.0
 	google.golang.org/grpc v1.57.0

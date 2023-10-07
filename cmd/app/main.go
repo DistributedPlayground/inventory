@@ -7,6 +7,7 @@ import (
 	env "github.com/DistributedPlayground/go-lib/config"
 	"github.com/DistributedPlayground/inventory/api"
 	"github.com/DistributedPlayground/inventory/config"
+	"github.com/DistributedPlayground/inventory/pkg/message"
 	"github.com/DistributedPlayground/inventory/pkg/service"
 	"github.com/DistributedPlayground/inventory/pkg/store"
 	"github.com/rs/zerolog"
@@ -29,8 +30,13 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
+	redis := store.NewRedis()
+
+	messages := message.NewMessage(store.MustNewKafka(), redis)
+	go messages.Listen()
+
 	// Create a new instance of the inventory service
-	service := service.NewInventory(store.NewRedis(), api.UnimplementedInventoryServer{})
+	service := service.NewInventory(redis, api.UnimplementedInventoryServer{})
 
 	server := grpc.NewServer()
 
